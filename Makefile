@@ -86,8 +86,15 @@ ifndef MISSPELL_CMD
 	go get -u github.com/client9/misspell/cmd/misspell
 endif
 
-clean_vendor:
+clean-vendor:
 	find -L ./vendor -type l | xargs rm -rf
+
+generate-client:
+	docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate \
+	--api-package openapi \
+    -i /local/docs/openapi/pipeline.yaml \
+    -g go \
+    -o /local/openapi
 
 ineffassign: install-ineffassign
 	ineffassign ${GOFILES_NOVENDOR}

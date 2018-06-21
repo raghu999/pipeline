@@ -8,6 +8,8 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: http://localhost:9090
 tags:
   - name: applications
     description: Application managed by Pipeline
@@ -491,7 +493,7 @@ paths:
         '200':
           description: "Posthooks started"
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
@@ -1542,7 +1544,7 @@ paths:
       tags:
         - auth
       summary: List all API tokens
-      operationId: GetToken
+      operationId: GetTokens
       description: List all API tokens
       responses:
         '200':
@@ -1569,10 +1571,10 @@ paths:
       tags:
         - auth
       summary: Generate token
-      operationId: GetToken
+      operationId: GenerateToken
       description: Generate token
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
@@ -4312,15 +4314,14 @@ components:
           type: integer
           example: 1
         values:
-          type: array
-          items:
-            oneOf:
-              - $ref: '#/components/schemas/SecretKeyValueAmazon'
-              - $ref: '#/components/schemas/SecretKeyValueAzure'
-              - $ref: '#/components/schemas/SecretKeyValueGoogle'
-              - $ref: '#/components/schemas/SecretKeyValueKubernetes'
-              - $ref: '#/components/schemas/SecretKeyValueGeneric'
-              - $ref: '#/components/schemas/SecretKeyValueTLS'
+          type: object
+          oneOf:
+            - $ref: '#/components/schemas/SecretKeyValueAmazon'
+            - $ref: '#/components/schemas/SecretKeyValueAzure'
+            - $ref: '#/components/schemas/SecretKeyValueGoogle'
+            - $ref: '#/components/schemas/SecretKeyValueKubernetes'
+            - $ref: '#/components/schemas/SecretKeyValueGeneric'
+            - $ref: '#/components/schemas/SecretKeyValueTLS'
           example:
             type: string
             project_id: string
