@@ -91,10 +91,10 @@ clean-vendor:
 
 generate-client:
 	docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli generate \
-	--api-package openapi \
+	--additional-properties packageName=client \
     -i /local/docs/openapi/pipeline.yaml \
     -g go \
-    -o /local/openapi
+    -o /local/client
 
 ineffassign: install-ineffassign
 	ineffassign ${GOFILES_NOVENDOR}
